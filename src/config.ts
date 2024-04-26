@@ -11,9 +11,9 @@ export type Environment = 'local' | 'staging' | 'production'
 export type Config = {
   env: Environment;
   logLevel: LogLevelDesc;
-  host: string;
-  port: number;
-  pfiDid: BearerDid;
+  host: string[];
+  port: string[];
+  pfiDid: BearerDid[];
   allowlist: string[];
   pinPaymentsKey: string;
 }
@@ -21,9 +21,9 @@ export type Config = {
 export const config: Config = {
   env: (process.env['ENV'] as Environment) || 'local',
   logLevel: (process.env['LOG_LEVEL'] as LogLevelDesc) || 'info',
-  host: process.env['HOST'] || 'http://localhost:9000',
-  port: parseInt(process.env['PORT'] || '9000'),
-  pfiDid: await createOrLoadDid('pfi.json'),
+  host: ['http://localhost:8000', 'http://localhost:9000', 'http://localhost:3000'],
+  port: ['8000', '9000', '3000'],
+  pfiDid: await createOrLoadDid(['pfi_0.json', 'pfi_1.json']),
   pinPaymentsKey: process.env['SEC_PIN_PAYMENTS_SECRET_KEY'],
   allowlist: JSON.parse(process.env['SEC_ALLOWLISTED_DIDS'] || '[]'),
 }
@@ -31,22 +31,39 @@ export const config: Config = {
 
 
 
-async function createOrLoadDid(filename: string): Promise<BearerDid> {
+async function createOrLoadDid(filenames: string[]): Promise<BearerDid[]> {
 
-    console.log('Creating new did for server...')
-    const bearerDid = await DidDht.create({
-      options: {
-        services: [
-          {
-            id: 'pfi',
-            type: 'PFI',
-            serviceEndpoint: process.env['HOST'] || 'http://localhost:9000',
-          },
-        ],
-      },
-    })
-    const portableDid = await bearerDid.export()
-    await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
-    return bearerDid
-  
+  console.log('Creating new dids for server PFIs...')
+  const pfis: BearerDid[] = []
+  const bearerDid_0 = await DidDht.create({
+    options: {
+      services: [
+        {
+          id: 'pfi',
+          type: 'PFI',
+          serviceEndpoint: 'http://localhost:8000',
+        },
+      ],
+    },
+  })
+  const bearerDid_1 = await DidDht.create({
+    options: {
+      services: [
+        {
+          id: 'pfi',
+          type: 'PFI',
+          serviceEndpoint: 'http://localhost:9000',
+        },
+      ],
+    },
+  })
+  pfis.push(bearerDid_0)
+  pfis.push(bearerDid_1)
+
+  const portableDid_0 = await bearerDid_0.export()
+  const portableDid_1 = await bearerDid_1.export()
+  await fs.writeFile(filenames[0], JSON.stringify(portableDid_0, null, 2))
+  await fs.writeFile(filenames[1], JSON.stringify(portableDid_1, null, 2))
+  return pfis
+
 }
