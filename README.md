@@ -1,19 +1,22 @@
-# Example tbdex remittance for USD to AUD
+# Example tbdex remittance mock PFI servers
 
-This is an example remittance PFI implementation using the tbdex protocol which uses a real payment API.
+This is an example remittance PFI implementation using the tbdex protocol which mocks a real payment API.
+
+Currently mocks two PFI servers.
 
 This example will:
 
-* Show a plain HTML and vanilla javascript client page that captures a credit card, creates a DID and requests a Verifiable Credential.
 * A server which does an "OFAC" check on the customer and issues a verifiable credential only if they are not on the OFAC list.
-* A tbdex protocol implementation that will charge the customer's credit card in USD and remit AUD as required to specified bank account.
+* Two tbdex protocol implementation that mocks charging the customer's credit card in USD and remit AUD as required to specified bank account.
 
-See [index.html](src/didpay-client/index.html) for the client code and [main.ts](src/main.ts) for the liquidity node code (server).
+See [main.ts](src/main.ts) for the liquidity node code (server).
 
 NOTE: this is not using market rates, or anything sensible, and is not intended to showcase all regulatory requirements that must be fulfilled. This is for illustrative purposes only, not production use.
 For a more general exemplar for a PFI liquidity node, please take a look at: https://github.com/TBD54566975/tbdex-pfi-exemplar/ (which also includes a database, this one does not).
 
 ![image](https://github.com/TBD54566975/example-pfi-aud-usd-tbdex/assets/14976/6db08cbb-c0f0-4881-a120-214c33a60443)
+
+This project is a fork of https://github.com/TBD54566975/example-pfi-aud-usd-tbdex
 
 
 # Development Prerequisites
@@ -39,17 +42,11 @@ Once you have installed `nvm`, install the desired node version with `nvm instal
 
 > 💡 Make sure you have all the [prerequisites](#development-prerequisites)
 
-Go to [pin payments](https://pinpayments.com/) sign up and get a test api secret key, then `export SEC_PIN_PAYMENTS_SECRET_KEY=(secret key here)` (or you can use a .env file).
-
 ## Step 1: Run liquidity node (server)
 
 Run the server (or restart it) in another terminal window:
 
 `npm run server`
-
-## Step 2: Run client app (browser)
-
-Open `src/didpay-client/index.html` in a browser and try it out!
 
 # Implementing a PFI
 
