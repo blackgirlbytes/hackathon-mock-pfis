@@ -3,6 +3,7 @@ import { config } from './config.js'
 // import fs from 'fs/promises'
 import { PresentationExchange } from '@web5/credentials'
 import { issuerDid } from './credential-issuer.js'
+import { BearerDid } from '@web5/dids'
 
 // load issuer's did from a file called issuer-did.txt
 const issuer = issuerDid
@@ -14,7 +15,7 @@ async function createRandomOffering(index: number): Promise<Offering> {
 
   const offering = Offering.create({
     metadata: {
-      from: config.pfiDid[index % 2].uri,  // Alternates between two URIs
+      from: config.pfiDid[index % 5].uri,  // Alternates between two URIs
       protocol: '1.0'
     },
     data: {
@@ -129,13 +130,13 @@ async function createRandomOffering(index: number): Promise<Offering> {
   })
 
   try {
-    await offering.sign(config.pfiDid[index % 2])
+    await offering.sign(config.pfiDid[index % 5])
     console.log('Offering signed')
   }
   catch (e) {
     console.log('error', e)
   }
-  // offering.sign(config.pfiDid[index % 2])  // Sign with alternating URI
+  // offering.sign(config.pfiDid[index % 5])  // Sign with alternating URI
 
   offering.validate()
   PresentationExchange.validateDefinition({
@@ -147,21 +148,28 @@ async function createRandomOffering(index: number): Promise<Offering> {
 }
 
 // Initialize an array of hardcoded offerings
-const hardcodedOfferings: Offering[] = await Promise.all(Array.from({ length: 5 }, (_, i) => createRandomOffering(i)))
+const hardcodedOfferings: Offering[] = await Promise.all(Array.from({ length: 10 }, (_, i) => createRandomOffering(i)))
 
 export class HardcodedOfferingRepository implements OfferingsApi {
+  pfi: BearerDid
+  pfiHardcodedOfferings: Offering[]
+
+  constructor(pfi: BearerDid) {
+    this.pfi = pfi
+    this.pfiHardcodedOfferings = hardcodedOfferings.filter((offering) => offering.metadata.from === pfi.uri)
+  }
   // Retrieve a single offering if found
   async getOffering(opts: { id: string }): Promise<Offering | undefined> {
     console.log('call for offerings')
-    return hardcodedOfferings.find((offering) => offering.id === opts.id)
+    return this.pfiHardcodedOfferings.find((offering) => offering.id === opts.id)
   }
 
   // Retrieve a list of offerings
   async getOfferings(): Promise<Offering[] | undefined> {
-    console.log('get all offerings')
-    return hardcodedOfferings
+    console.log('get all PFI offerings')
+    return this.pfiHardcodedOfferings
   }
 }
 
 // Export an instance of the repository
-export const OfferingRepository = new HardcodedOfferingRepository()
+// export const OfferingRepository = new HardcodedOfferingRepository()

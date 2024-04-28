@@ -8,11 +8,10 @@ import fuzzysort from 'fuzzysort'
 import fs from 'fs/promises'
 
 async function createOrLoadDid(filename: string): Promise<BearerDid> {
-      const bearerDid = await DidDht.create({
-      })
-      const portableDid = await bearerDid.export()
-      await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
-      return bearerDid    
+  const bearerDid = await DidDht.create({})
+  const portableDid = await bearerDid.export()
+  await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
+  return bearerDid
 }
 
 
