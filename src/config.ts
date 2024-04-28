@@ -3,7 +3,7 @@ import fs from 'fs/promises'
 
 import 'dotenv/config'
 
-import { BearerDid, DidDht, PortableDid } from '@web5/dids'
+import { BearerDid, DidDht } from '@web5/dids'
 
 
 export type Environment = 'local' | 'staging' | 'production'

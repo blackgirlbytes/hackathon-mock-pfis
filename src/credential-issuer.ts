@@ -1,4 +1,4 @@
-import { BearerDid, DidDht, PortableDid } from '@web5/dids'
+import { BearerDid, DidDht } from '@web5/dids'
 import { VerifiableCredential } from '@web5/credentials'
 
 import fetch from 'node-fetch'

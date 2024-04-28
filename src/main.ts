@@ -13,6 +13,7 @@ import { TbdexHttpServer } from '@tbdex/http-server'
 import { requestCredential } from './credential-issuer.js'
 import { NextFunction } from 'express-serve-static-core'
 import { InMemoryExchangesApi } from './exchanges.js'
+import { off } from 'process'
 
 console.log('PFI DID1: ', config.pfiDid[0].uri)
 console.log('PFI DID2: ', config.pfiDid[1].uri)
@@ -94,41 +95,34 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
     const offering = await OfferingRepository.getOffering({
       id: rfq.data.offeringId,
     })
-
     // rfq.payinSubunits is USD - but as a string, convert this to a decimal and multiple but our terrible exchange rate
     // convert to a string, with 2 decimal places
-    const terribleExchangeRate = 1.1
     const payout = (
-      parseFloat(rfq.data.payin.amount) * terribleExchangeRate
+      parseFloat(rfq.data.payin.amount) * Number(offering.data.payoutUnitsPerPayinUnit)
     ).toFixed(2)
 
-    if (
-      rfq.data.payin.kind == 'CREDIT_CARD' &&
-    offering.data.payin.currencyCode == 'USD' &&
-    offering.data.payout.currencyCode == 'AUD'
-    ) {
-      const quote = Quote.create({
-        metadata: {
-          from: activePFI.uri,
-          to: rfq.from,
-          exchangeId: rfq.exchangeId,
-          protocol: '1.0'
+    const quote = Quote.create({
+      metadata: {
+        from: activePFI.uri,
+        to: rfq.from,
+        exchangeId: rfq.exchangeId,
+        protocol: '1.0'
+      },
+      data: {
+        expiresAt: new Date(2028, 4, 1).toISOString(),
+        payin: {
+          currencyCode: offering.data.payin.currencyCode,
+          amount: rfq.data.payin.amount,
         },
-        data: {
-          expiresAt: new Date(2028, 4, 1).toISOString(),
-          payin: {
-            currencyCode: 'USD',
-            amount: rfq.data.payin.amount,
-          },
-          payout: {
-            currencyCode: 'AUD',
-            amount: payout,
-          },
+        payout: {
+          currencyCode: offering.data.payout.currencyCode,
+          amount: payout,
         },
-      })
-      await quote.sign(activePFI)
-      await ExchangeRepository.addMessage(quote)
-    }
+      },
+    })
+    await quote.sign(activePFI)
+    await ExchangeRepository.addMessage(quote)
+
   })
 
   // When the customer accepts the order
@@ -136,124 +130,22 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
     console.log('order requested')
     await ExchangeRepository.addMessage(order)
 
-    // first we will charge the card
-    // then we will send the money to the bank account
-
-    const quote = await ExchangeRepository.getQuote({
-      exchangeId: order.exchangeId,
-    })
+    // const quote = await ExchangeRepository.getQuote({
+    //   exchangeId: order.exchangeId,
+    // })
     const rfq = await ExchangeRepository.getRfq({
       exchangeId: order.exchangeId,
     })
-
-    const payinAmount =
-    '' + Math.round(parseFloat(quote.data.payin.amount) * 100)
-
-    let response = await fetch('https://test-api.pinpayments.com/1/charges', {
-      method: 'POST',
-      headers: {
-        Authorization:
-        'Basic ' + Buffer.from(config.pinPaymentsKey + ':').toString('base64'),
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        amount: payinAmount,
-        currency: 'USD',
-        description: 'For remittances',
-        ip_address: '203.192.1.172',
-        email: 'test@testing.com',
-        'card[number]': rfq.privateData.payin.paymentDetails['cc_number'],
-        'card[expiry_month]': rfq.privateData.payin.paymentDetails['expiry_month'],
-        'card[expiry_year]': rfq.privateData.payin.paymentDetails['expiry_year'],
-        'card[cvc]': rfq.privateData.payin.paymentDetails['cvc'],
-        'card[name]': rfq.privateData.payin.paymentDetails['name'],
-        'card[address_line1]': 'Nunya',
-        'card[address_city]': 'Bidnis',
-        'card[address_country]': 'USA',
-        'metadata[OrderNumber]': '123456',
-        'metadata[CustomerName]': 'Roland Robot',
-      }),
-    })
-
-    let data = await response.json()
+    // Start: business logic to transfer funds
     await updateOrderStatus(rfq, 'IN_PROGRESS', activePFI, ExchangeRepository)
-
-    if (response.ok) {
-      console.log('Charge created successfully. Token:', data.response.token)
-    } else {
-      console.error('Failed to create charge. Error:', data)
-      await close(rfq, 'Failed to create charge.', activePFI, ExchangeRepository)
-      return
-    }
-
-    // now transfer the the money to the bank account as AUD
-    // first create a reipient and get the recipient token
-    response = await fetch('https://test-api.pinpayments.com/1/recipients', {
-      method: 'POST',
-      headers: {
-        Authorization:
-        'Basic ' + Buffer.from(config.pinPaymentsKey + ':').toString('base64'),
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        email: 'roland@pinpayments.com',
-        name: 'Mr Roland Robot',
-        'bank_account[name]': rfq.privateData.payout.paymentDetails['accountName'],
-        'bank_account[bsb]': rfq.privateData.payout.paymentDetails['bsbNumber'],
-        'bank_account[number]':
-      rfq.privateData.payout.paymentDetails['accountNumber'],
-      }),
-    })
-
-    data = await response.json()
-
-    if (data.response && data.response.token) {
-      console.log('Recipient created successfully. Token:', data.response.token)
-    } else {
-      console.log('Unable to create recipient')
-      console.log(data)
-      await close(rfq, 'Failed to create recipient.', activePFI, ExchangeRepository)
-      return
-    }
-
-    const recipientToken = data.response.token
-    console.log('recipient token:', recipientToken)
 
     await updateOrderStatus(rfq, 'TRANSFERING_FUNDS', activePFI, ExchangeRepository)
 
-    // multiply payout by 100 for API and make it an integer
-    // payout is in AUD cents
-    //
-    // convert quote.data.payout.amount to a decimal
-    const payoutAmount =
-    '' + Math.round(parseFloat(quote.data.payout.amount) * 100)
+    await updateOrderStatus(rfq, 'SUCCESS', activePFI, ExchangeRepository)
 
-    response = await fetch('https://test-api.pinpayments.com/1/transfers', {
-      method: 'POST',
-      headers: {
-        Authorization:
-        'Basic ' + Buffer.from(config.pinPaymentsKey + ':').toString('base64'),
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        amount: payoutAmount,
-        currency: quote.data.payout.currencyCode,
-        description: 'For remittances',
-        recipient: recipientToken,
-      }),
-    })
+    await close(rfq, 'SUCCESS', activePFI, ExchangeRepository)
 
-    data = await response.json()
-
-    if (data.response && data.response.status == 'succeeded') {
-      console.log('------>Transfer succeeded!!')
-      await updateOrderStatus(rfq, 'SUCCESS', activePFI, ExchangeRepository)
-      await close(rfq, 'SUCCESS', activePFI, ExchangeRepository)
-    } else {
-      await updateOrderStatus(rfq, 'FAILED', activePFI, ExchangeRepository)
-      await close(rfq, 'Failed to create transfer.', activePFI, ExchangeRepository)
-    }
-
+    // End: business logic to transfer funds
     console.log('all DONE')
   })
 
