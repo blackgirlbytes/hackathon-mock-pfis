@@ -28,7 +28,23 @@ export const config: Config = {
   allowlist: JSON.parse(process.env['SEC_ALLOWLISTED_DIDS'] || '[]'),
 }
 
-async function createADid(serviceEndpoint: string) {
+async function loadDID(filename) {
+  try {
+    const data = await fs.readFile(filename, 'utf-8')
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Error reading from file:', error)
+    return false
+  }
+}
+
+async function createADid(serviceEndpoint: string, filename: string) {
+  const existingDid = await loadDID(filename)
+  if (existingDid) {
+    const bearerDid = await DidDht.import({portableDid: existingDid})
+    return bearerDid
+  }
+  // else create a new one
   const bearerDid = await DidDht.create({
     options: {
       services: [
@@ -40,6 +56,9 @@ async function createADid(serviceEndpoint: string) {
       ],
     },
   })
+  const portableDid = await bearerDid.export()
+  await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
+
   return bearerDid
 }
 
@@ -47,13 +66,13 @@ async function createADid(serviceEndpoint: string) {
 
 async function createOrLoadDid(filenames: string[]): Promise<BearerDid[]> {
 
-  console.log('Creating new dids for server PFIs...')
+  console.log('Setting up dids for server PFIs...')
   const pfis: BearerDid[] = []
-  const bearerDid1 = await createADid('http://localhost:4000')
-  const bearerDid2 = await createADid('http://localhost:5000')
-  const bearerDid3 = await createADid('http://localhost:8000')
-  const bearerDid4 = await createADid('http://localhost:8080')
-  const bearerDid5 = await createADid('http://localhost:9000')
+  const bearerDid1 = await createADid('http://localhost:4000', filenames[0])
+  const bearerDid2 = await createADid('http://localhost:5000', filenames[1])
+  const bearerDid3 = await createADid('http://localhost:8000', filenames[2])
+  const bearerDid4 = await createADid('http://localhost:8080', filenames[3])
+  const bearerDid5 = await createADid('http://localhost:9000', filenames[4])
 
 
   pfis.push(bearerDid1)
@@ -61,18 +80,6 @@ async function createOrLoadDid(filenames: string[]): Promise<BearerDid[]> {
   pfis.push(bearerDid3)
   pfis.push(bearerDid4)
   pfis.push(bearerDid5)
-
-  const portableDid1 = await bearerDid1.export()
-  const portableDid2 = await bearerDid2.export()
-  const portableDid3 = await bearerDid3.export()
-  const portableDid4 = await bearerDid4.export()
-  const portableDid5 = await bearerDid5.export()
-
-  await fs.writeFile(filenames[0], JSON.stringify(portableDid1, null, 2))
-  await fs.writeFile(filenames[1], JSON.stringify(portableDid2, null, 2))
-  await fs.writeFile(filenames[2], JSON.stringify(portableDid3, null, 2))
-  await fs.writeFile(filenames[3], JSON.stringify(portableDid4, null, 2))
-  await fs.writeFile(filenames[4], JSON.stringify(portableDid5, null, 2))
 
   return pfis
 }
