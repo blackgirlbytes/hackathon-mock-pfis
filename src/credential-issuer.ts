@@ -1,21 +1,16 @@
-import { BearerDid, DidDht } from '@web5/dids'
+import { BearerDid } from '@web5/dids'
 import { VerifiableCredential } from '@web5/credentials'
 
 import fetch from 'node-fetch'
 import Papa from 'papaparse'
 import fuzzysort from 'fuzzysort'
 
-import fs from 'fs/promises'
-
-async function createOrLoadDid(filename: string): Promise<BearerDid> {
-  const bearerDid = await DidDht.create({})
-  const portableDid = await bearerDid.export()
-  await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
-  return bearerDid
-}
+import { config } from './config.js'
 
 
-const issuer: BearerDid = await createOrLoadDid('issuer.json')
+
+
+const issuer: BearerDid = config.pfiDid[4] // issuer is the 5th PFI - pfi_5.json
 // write issuer did to file so server can trust it:
 
 

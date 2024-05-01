@@ -111,7 +111,7 @@ async function createRandomOffering(index: number): Promise<Offering> {
                   path: ['$.type[*]'],
                   filter: {
                     type: 'string',
-                    pattern: '^SanctionCredential$',
+                    const: 'SanctionCredential',
                   },
                 },
                 {
@@ -166,7 +166,7 @@ export class HardcodedOfferingRepository implements OfferingsApi {
 
   // Retrieve a list of offerings
   async getOfferings(): Promise<Offering[] | undefined> {
-    console.log('get all PFI offerings')
+    console.log('get PFI offerings')
     return this.pfiHardcodedOfferings
   }
 }

@@ -167,18 +167,6 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
     res.send(activePFI.uri)
   })
 
-  // A very low fi implementation of a credential issuer - will just check they are not sanctioned.
-  // In the real world this would be done via OIDC4VC or similar.
-  // In this case a check could be done on each transaction so a VC could be optional, but it makes the example richer to have it stored in the client (html) and sent with the RFQ.
-  // httpApi.api.get('/vc', async (req, res) => {
-  //   const credentials = await requestCredential(
-  //   req.query.name as string,
-  //   req.query.country as string,
-  //   req.query.did as string,
-  //   )
-  //   res.send(credentials)
-  // })
-
   return { httpApi, server }
 }
 
