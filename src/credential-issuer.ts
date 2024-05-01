@@ -110,9 +110,12 @@ export async function requestCredential(
     issuer: issuer.uri,
     subject: customerDid,
     data: {
-      beep: 'boop',
+      name,
+      country
     },
   })
+
+  console.log('vc:', country)
 
   const vcJwt = await vc.sign({ did: issuer })
 

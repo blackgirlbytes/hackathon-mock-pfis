@@ -13,7 +13,6 @@ import { TbdexHttpServer } from '@tbdex/http-server'
 import { requestCredential } from './credential-issuer.js'
 import { NextFunction } from 'express-serve-static-core'
 import { InMemoryExchangesApi } from './exchanges.js'
-import { off } from 'process'
 
 console.log('PFI DID1: ', config.pfiDid[0].uri)
 console.log('PFI DID2: ', config.pfiDid[1].uri)
@@ -171,14 +170,14 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
   // A very low fi implementation of a credential issuer - will just check they are not sanctioned.
   // In the real world this would be done via OIDC4VC or similar.
   // In this case a check could be done on each transaction so a VC could be optional, but it makes the example richer to have it stored in the client (html) and sent with the RFQ.
-  httpApi.api.get('/vc', async (req, res) => {
-    const credentials = await requestCredential(
-    req.query.name as string,
-    req.query.country as string,
-    req.query.did as string,
-    )
-    res.send(credentials)
-  })
+  // httpApi.api.get('/vc', async (req, res) => {
+  //   const credentials = await requestCredential(
+  //   req.query.name as string,
+  //   req.query.country as string,
+  //   req.query.did as string,
+  //   )
+  //   res.send(credentials)
+  // })
 
   return { httpApi, server }
 }
@@ -225,6 +224,16 @@ const myPFIServer2 = createPFIServer({bearerDid: config.pfiDid[1], port: config.
 const myPFIServer3 = createPFIServer({bearerDid: config.pfiDid[2], port: config.port[2]})
 const myPFIServer4 = createPFIServer({bearerDid: config.pfiDid[3], port: config.port[3]})
 const myPFIServer5 = createPFIServer({bearerDid: config.pfiDid[4], port: config.port[4]})
+
+// Make one of the PFIs a credential issuer - localhost:9000
+myPFIServer5.httpApi.api.get('/vc', async (req, res) => {
+  const credentials = await requestCredential(
+    req.query.name as string,
+    req.query.country as string,
+    req.query.did as string,
+  )
+  res.send(credentials)
+})
 
 
 
