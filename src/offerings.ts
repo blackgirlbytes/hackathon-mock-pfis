@@ -19,75 +19,39 @@ async function createRandomOffering(index: number): Promise<Offering> {
       protocol: '1.0'
     },
     data: {
-      description: `Randomized USD to EUR liquidity node ${index + 1}`,
+      description: `Exchange TBD for Socks node ${index + 1}`,
       payoutUnitsPerPayinUnit: selectedExchangeRate,
       payout: {
-        currencyCode: 'EUR',
+        currencyCode: 'SOC',
         methods: [
           {
-            kind: 'BANK_ACCOUNT',
+            kind: 'DELIVERY_ADDRESS',
             estimatedSettlementTime: 86400, // 24 hours in seconds
             requiredPaymentDetails: {
-              $schema: 'http://json-schema.org/draft-07/schema#',
-              title: 'Bank Account Required Payment Details',
-              type: 'object',
-              required: ['accountNumber', 'bsbNumber', 'accountName'],
-              additionalProperties: false,
-              properties: {
-                accountNumber: {
-                  title: 'Account Number',
-                  description: 'Account Number',
-                  type: 'string',
+              '$schema': 'http://json-schema.org/draft-07/schema#',
+              'title': 'Socks Required Payment Details',
+              'type': 'object',
+              'required': [
+                'address',
+              ],
+              'additionalProperties': false,
+              'properties': {
+                'address': {
+                  'title': 'Delivery Address',
+                  'description': 'Address to deliver the socks to',
+                  'type': 'string'
                 },
-                bsbNumber: {
-                  title: 'BSB Number',
-                  description: 'BSB Number',
-                  type: 'string',
-                },
-                accountName: {
-                  title: 'Account Name',
-                  description: 'Account Name',
-                  type: 'string',
-                },
-              },
-            },
+              }
+            }
           },
         ],
       },
       payin: {
-        currencyCode: 'USD',
+        currencyCode: 'TBD',
         methods: [
           {
-            kind: 'CREDIT_CARD',
-            requiredPaymentDetails: {
-              $schema: 'http://json-schema.org/draft-07/schema#',
-              title: 'Credit Card',
-              type: 'object',
-              required: ['cc_number', 'expiry_month', 'expiry_year', 'cvc', 'name'],
-              additionalProperties: false,
-              properties: {
-                cc_number: {
-                  title: 'credit card number',
-                  type: 'string',
-                },
-                expiry_month: {
-                  title: 'month of expiry',
-                  type: 'string',
-                },
-                expiry_year: {
-                  title: 'year of expiry',
-                  type: 'string',
-                },
-                cvc: {
-                  title: 'security digits',
-                  type: 'string',
-                },
-                name: {
-                  title: 'name on card',
-                  type: 'string',
-                },
-              },
-            },
+            kind: 'TBDOLLARS_BALANCE',
+            requiredPaymentDetails: {},
           },
         ],
       },

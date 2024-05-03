@@ -88,12 +88,15 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
 
   // provide the quote
   httpApi.onCreateExchange(async (ctx, rfq: Rfq) => {
-
-    console.log('RFQ', JSON.stringify(rfq, null, 2))
-    await ExchangeRepository.addMessage(rfq)
+    try {
+      await ExchangeRepository.addMessage(rfq)
+    } catch (error) {
+      console.log('failed to add message', error)
+    }
     const offering = await OfferingRepository.getOffering({
       id: rfq.data.offeringId,
     })
+
     // rfq.payinSubunits is USD - but as a string, convert this to a decimal and multiple but our terrible exchange rate
     // convert to a string, with 2 decimal places
     const payout = (
@@ -121,7 +124,6 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
     })
     await quote.sign(activePFI)
     await ExchangeRepository.addMessage(quote)
-
   })
 
   // When the customer accepts the order
@@ -149,6 +151,7 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
   })
 
   httpApi.onSubmitClose(async (ctx, close) => {
+    console.log('close called')
     await ExchangeRepository.addMessage(close)
   })
 
@@ -193,6 +196,8 @@ async function updateOrderStatus(rfq: Rfq, status: string, pfi: BearerDid, Excha
 async function close(rfq: Rfq, reason: string,  pfi: BearerDid, ExchangeRepository: InMemoryExchangesApi) {
   console.log('closing exchange ', reason)
 
+  const isSuccess = reason === 'SUCCESS'
+
   const close = Close.create({
     metadata: {
       from: pfi.uri,
@@ -201,6 +206,7 @@ async function close(rfq: Rfq, reason: string,  pfi: BearerDid, ExchangeReposito
     },
     data: {
       reason: reason,
+      ...(isSuccess && { success: true })
     },
   })
   await close.sign(pfi)
