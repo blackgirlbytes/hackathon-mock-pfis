@@ -7,7 +7,6 @@ import { BearerDid } from '@web5/dids'
 
 // load issuer's did from a file called issuer-did.txt
 const issuer = issuerDid
-const fakeExchangeRates: number[] = [0.95, 0.93, 0.94, 0.92, 0.91]
 
 // generating mock offeringsData
 export const offeringDataTBDollarsToUSDC: OfferingData = {
@@ -439,7 +438,7 @@ export const offeringDataUSDToNGN: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'NigerianCredential',
               },
             },
             {
