@@ -7,6 +7,7 @@ import { BearerDid, DidDht } from '@web5/dids'
 
 
 export type Environment = 'local' | 'staging' | 'production'
+const pfi_path = 'src/pfis/'
 
 export type Config = {
   env: Environment;
@@ -23,14 +24,14 @@ export const config: Config = {
   logLevel: (process.env['LOG_LEVEL'] as LogLevelDesc) || 'info',
   host: [ 'http://localhost:4000',  'http://localhost:5000', 'http://localhost:8000',  'http://localhost:8080', 'http://localhost:9000'],
   port: ['4000', '5000', '8000', '8080', '9000'],
-  pfiDid: await createOrLoadDid(['pfi_1.json', 'pfi_2.json', 'pfi_3.json', 'pfi_4.json', 'pfi_5.json']),
+  pfiDid: await createOrLoadDid(['pfi_1.json', 'pfi_2.json', 'pfi_3.json', 'pfi_4.json', 'pfi_issuer.json']),
   pinPaymentsKey: process.env['SEC_PIN_PAYMENTS_SECRET_KEY'],
   allowlist: JSON.parse(process.env['SEC_ALLOWLISTED_DIDS'] || '[]'),
 }
 
 async function loadDID(filename) {
   try {
-    const data = await fs.readFile(filename, 'utf-8')
+    const data = await fs.readFile(pfi_path + filename, 'utf-8')
     return JSON.parse(data)
   } catch (error) {
     console.error('Error reading from file:', error)
@@ -57,7 +58,7 @@ async function createADid(serviceEndpoint: string, filename: string) {
     },
   })
   const portableDid = await bearerDid.export()
-  await fs.writeFile(filename, JSON.stringify(portableDid, null, 2))
+  await fs.writeFile(pfi_path + filename, JSON.stringify(portableDid, null, 2))
 
   return bearerDid
 }

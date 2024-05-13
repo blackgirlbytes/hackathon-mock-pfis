@@ -10,7 +10,7 @@ const issuer = issuerDid
 
 // generating mock offeringsData
 export const offeringDataTBDollarsToUSDC: OfferingData = {
-  description: `Exchange your TBDollars for USDC on Polygon network`,
+  description: `Exchange your TBDollars for USDC Dummy`,
   payoutUnitsPerPayinUnit: '0.00035',
   payout: {
     currencyCode: 'USDC',
