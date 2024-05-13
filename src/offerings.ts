@@ -64,7 +64,7 @@ export const offeringDataTBDollarsToUSDC: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -140,7 +140,7 @@ export const offeringDataUSDToGHS: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -216,7 +216,7 @@ export const offeringDataUSDToKES: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -292,7 +292,7 @@ export const offeringDataKESToZAR: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -362,7 +362,7 @@ export const offeringDataGHSToUSDC: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -508,7 +508,7 @@ export const offeringDataZARToBTC: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'SanctionCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {

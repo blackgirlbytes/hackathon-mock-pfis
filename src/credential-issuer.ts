@@ -99,18 +99,23 @@ export async function requestCredential(
     return false
   }
 
-  // Create a sanctions credential so that the PFI knows that Alice is legit.
+
+
+  // Create a KCC credential so that the PFI knows that Alice is legit.
   const vc = await VerifiableCredential.create({
-    type: 'SanctionCredential',
+    type: 'KnownCustomerCredential',
     issuer: issuer.uri,
     subject: customerDid,
+    expirationDate: '2026-05-19T08:02:04Z',
     data: {
       name,
-      country
+      countryOfResidence: country
+    },
+    credentialSchema: {
+      id: 'https://schema.org/PFI',
+      type: 'JsonSchema'
     },
   })
-
-  console.log('vc:', country)
 
   const vcJwt = await vc.sign({ did: issuer })
 
