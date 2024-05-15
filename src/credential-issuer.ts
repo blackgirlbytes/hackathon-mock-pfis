@@ -44,7 +44,7 @@ async function loadSanctionsData(): Promise<SanctionEntry[] | null> {
   }
 }
 
-console.log('Loading OFAC sanctions data...')
+// console.log('Loading OFAC sanctions data...')
 let sanctionsData: SanctionEntry[] | null = await loadSanctionsData()
 
 function searchSanctions(

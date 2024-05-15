@@ -41,7 +41,7 @@ export const offeringDataTBDollarsToUSDC: OfferingData = {
     currencyCode: 'TBD',
     methods: [
       {
-        kind: 'TBDOLLARS_BALANCE',
+        kind: 'STORED_BALANCE',
         requiredPaymentDetails: {},
       },
     ],
@@ -120,7 +120,13 @@ export const offeringDataUSDToGHS: OfferingData = {
     methods: [
       {
         kind: 'USD_BANK_TRANSFER',
-        requiredPaymentDetails: {},
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
       },
     ],
   },
@@ -196,7 +202,13 @@ export const offeringDataUSDToKES: OfferingData = {
     methods: [
       {
         kind: 'USD_BANK_TRANSFER',
-        requiredPaymentDetails: {},
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
       },
     ],
   },
@@ -583,7 +595,7 @@ async function createRandomOffering(index: number): Promise<Offering> {
 
   try {
     await offering.sign(config.pfiDid[customPFIIndex])
-    console.log('Offering signed')
+    // console.log('Offering signed')
   }
   catch (e) {
     console.log('error', e)
@@ -595,7 +607,7 @@ async function createRandomOffering(index: number): Promise<Offering> {
     presentationDefinition: offering.data.requiredClaims
   })
 
-  console.log(`Offering ${index + 1} created and validated`)
+  // console.log(`Offering ${index + 1} created and validated`)
   return offering
 }
 

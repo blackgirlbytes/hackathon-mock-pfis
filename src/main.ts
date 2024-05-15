@@ -14,11 +14,11 @@ import { requestCredential } from './credential-issuer.js'
 import { NextFunction } from 'express-serve-static-core'
 import { InMemoryExchangesApi } from './exchanges.js'
 
-console.log('PFI DID1: ', config.pfiDid[0].uri)
-console.log('PFI DID2: ', config.pfiDid[1].uri)
-console.log('PFI DID3: ', config.pfiDid[2].uri)
-console.log('PFI DID4: ', config.pfiDid[3].uri)
-console.log('PFI DID5: ', config.pfiDid[4].uri)
+console.log('"AquaFinance Capital" launched: ', config.pfiDid[0].uri)
+console.log('"SwiftLiquidity Solutions" launched: ', config.pfiDid[1].uri)
+console.log('"Flowback Financial" launched: ', config.pfiDid[2].uri)
+console.log('"Vertex Liquid Assets" launched: ', config.pfiDid[3].uri)
+console.log('"Titanium Trust" launched: ', config.pfiDid[4].uri)
 
 
 process.on('unhandledRejection', (reason: any, promise) => {
