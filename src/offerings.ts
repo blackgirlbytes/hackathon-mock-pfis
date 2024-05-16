@@ -450,7 +450,7 @@ export const offeringDataUSDToNGN: OfferingData = {
               path: ['$.type[*]'],
               filter: {
                 type: 'string',
-                const: 'NigerianCredential',
+                const: 'KnownCustomerCredential',
               },
             },
             {
@@ -537,48 +537,693 @@ export const offeringDataZARToBTC: OfferingData = {
   },
 }
 
+export const offeringDataEURToZAR: OfferingData = {
+  description: `Exchange your Euros for South African Rand`,
+  payoutUnitsPerPayinUnit: '17.85',
+  payout: {
+    currencyCode: 'ZAR',
+    methods: [
+      {
+        kind: 'ZAR_BANK_TRANSFER',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'ZAR Required Payment Details',
+          'type': 'object',
+          'required': ['accountNumber', 'bankName'],
+          'additionalProperties': false,
+          'properties': {
+            'accountNumber': {
+              'title': 'ZAR Bank Account Number',
+              'description': 'Bank account number to pay out ZAR to',
+              'type': 'string'
+            },
+            'bankName': {
+              'title': 'Bank Name',
+              'description': 'The name of the bank for ZAR transfer',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'EUR',
+    methods: [
+      {
+        kind: 'EUR_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your Euro account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '7ce4004c-3c38-4853-968b-e411bafcd945',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'bbdb9b7c-5754-4f46-b63b-590bada959e0',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataGBPToCAD: OfferingData = {
+  description: `Exchange your British Pounds for Canadian Dollars`,
+  payoutUnitsPerPayinUnit: '1.70',
+  payout: {
+    currencyCode: 'CAD',
+    methods: [
+      {
+        kind: 'CAD_BANK_TRANSFER',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'CAD Required Payment Details',
+          'type': 'object',
+          'required': ['accountNumber', 'bankName'],
+          'additionalProperties': false,
+          'properties': {
+            'accountNumber': {
+              'title': 'CAD Bank Account Number',
+              'description': 'Bank account number to pay out CAD to',
+              'type': 'string'
+            },
+            'bankName': {
+              'title': 'Bank Name',
+              'description': 'The name of the bank for CAD transfer',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'GBP',
+    methods: [
+      {
+        kind: 'GBP_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '7ce4004c-3c38-4853-968b-e411bafcd945',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'bbdb9b7c-5754-4f46-b63b-590bada959e0',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataUSDToGBP: OfferingData = {
+  description: `Exchange your US Dollars for British Pounds`,
+  payoutUnitsPerPayinUnit: '0.82', // Example rate, adjust according to current rates
+  payout: {
+    currencyCode: 'GBP',
+    methods: [
+      {
+        kind: 'GBP_BANK_TRANSFER',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'GBP Required Payment Details',
+          'type': 'object',
+          'required': ['accountNumber', 'sortCode'],
+          'additionalProperties': false,
+          'properties': {
+            'accountNumber': {
+              'title': 'GBP Bank Account Number',
+              'description': 'Bank account number to pay out GBP',
+              'type': 'string'
+            },
+            'bankName': {
+              'title': 'Bank Name',
+              'description': 'The name of the bank for GBP transfer',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'USD',
+    methods: [
+      {
+        kind: 'USD_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '11ce4004c-3c38-4853-968b-e411bafcd988',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'eedb9b7c-5754-4f46-b63b-590bada959e4',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataAUDToJPY: OfferingData = {
+  description: `Exchange your Australian Dollars for Japanese Yen`,
+  payoutUnitsPerPayinUnit: '93.25',
+  payout: {
+    currencyCode: 'JPY',
+    methods: [
+      {
+        kind: 'JPY_BANK_TRANSFER',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'JPY Required Payment Details',
+          'type': 'object',
+          'required': ['accountNumber', 'bankName'],
+          'additionalProperties': false,
+          'properties': {
+            'accountNumber': {
+              'title': 'JPY Bank Account Number',
+              'description': 'Bank account number to pay out JPY to',
+              'type': 'string'
+            },
+            'bankName': {
+              'title': 'Bank Name',
+              'description': 'The name of the bank for JPY transfer',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'AUD',
+    methods: [
+      {
+        kind: 'AUD_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '7ce4004c-3c38-4853-968b-e411bafcd945',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'bbdb9b7c-5754-4f46-b63b-590bada959e0',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataZARToNGN: OfferingData = {
+  description: `Exchange your South African Rand for Nigerian Naira`,
+  payoutUnitsPerPayinUnit: '29.0',
+  payout: {
+    currencyCode: 'NGN',
+    methods: [
+      {
+        kind: 'NGN_MOBILE_MONEY',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'NGN Mobile Money Payment Details',
+          'type': 'object',
+          'required': ['mobileNumber', 'provider'],
+          'additionalProperties': false,
+          'properties': {
+            'mobileNumber': {
+              'title': 'Mobile Phone Number',
+              'description': 'Mobile number registered with mobile money to pay out NGN',
+              'type': 'string'
+            },
+            'provider': {
+              'title': 'Mobile Money Provider',
+              'description': 'Mobile money service provider for the transaction',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'ZAR',
+    methods: [
+      {
+        kind: 'ZAR_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '8ce4004c-3c38-4853-968b-e411bafcd955',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'bbdb9b7c-5754-4f46-b63b-590bada959e1',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataGHSToKES: OfferingData = {
+  description: `Exchange your Ghanaian Cedis for Kenyan Shillings`,
+  payoutUnitsPerPayinUnit: '15.2',
+  payout: {
+    currencyCode: 'KES',
+    methods: [
+      {
+        kind: 'KES_MOBILE_MONEY',
+        estimatedSettlementTime: 72000, // 20 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'KES Mobile Money Payment Details',
+          'type': 'object',
+          'required': ['phoneNumber', 'networkProvider'],
+          'additionalProperties': false,
+          'properties': {
+            'phoneNumber': {
+              'title': 'Mobile Phone Number',
+              'description': 'Mobile number registered with mobile money to pay out KES',
+              'type': 'string'
+            },
+            'networkProvider': {
+              'title': 'Mobile Money Provider',
+              'description': 'Mobile money service provider for the transaction',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'GHS',
+    methods: [
+      {
+        kind: 'GHS_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '9ce4004c-3c38-4853-968b-e411bafcd966',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'ccdb9b7c-5754-4f46-b63b-590bada959e2',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataMADToEGP: OfferingData = {
+  description: `Exchange your Moroccan Dirhams for Egyptian Pounds`,
+  payoutUnitsPerPayinUnit: '4.33',
+  payout: {
+    currencyCode: 'EGP',
+    methods: [
+      {
+        kind: 'EGP_BANK_TRANSFER',
+        estimatedSettlementTime: 86400, // 24 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'EGP Bank Transfer Payment Details',
+          'type': 'object',
+          'required': ['accountNumber', 'bankName'],
+          'additionalProperties': false,
+          'properties': {
+            'accountNumber': {
+              'title': 'EGP Bank Account Number',
+              'description': 'Bank account number to pay out EGP',
+              'type': 'string'
+            },
+            'bankName': {
+              'title': 'Bank Name',
+              'description': 'The name of the bank for EGP transfer',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'MAD',
+    methods: [
+      {
+        kind: 'MAD_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '10ce4004c-3c38-4853-968b-e411bafcd977',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'dddb9b7c-5754-4f46-b63b-590bada959e3',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+export const offeringDataGHSToNGN: OfferingData = {
+  description: `Exchange your Ghanaian Cedis for Nigerian Naira`,
+  payoutUnitsPerPayinUnit: '75.5',  // Example rate, adjust according to current rates
+  payout: {
+    currencyCode: 'NGN',
+    methods: [
+      {
+        kind: 'NGN_MOBILE_MONEY',
+        estimatedSettlementTime: 72000, // 20 hours in seconds
+        requiredPaymentDetails: {
+          '$schema': 'http://json-schema.org/draft-07/schema#',
+          'title': 'NGN Mobile Money Payment Details',
+          'type': 'object',
+          'required': ['phoneNumber', 'networkProvider'],
+          'additionalProperties': false,
+          'properties': {
+            'phoneNumber': {
+              'title': 'Mobile Phone Number',
+              'description': 'Mobile number registered with mobile money to pay out NGN',
+              'type': 'string'
+            },
+            'networkProvider': {
+              'title': 'Mobile Money Provider',
+              'description': 'Mobile money service provider for the transaction',
+              'type': 'string'
+            },
+          }
+        }
+      },
+    ],
+  },
+  payin: {
+    currencyCode: 'GHS',
+    methods: [
+      {
+        kind: 'GHS_BANK_TRANSFER',
+        requiredPaymentDetails: {
+          paymentDetails: {
+            accountNumber: 'Your account number',
+            bic: 'Your bank BIC',
+            accountName: 'Your account name',
+          },
+        },
+      },
+    ],
+  },
+  requiredClaims: {
+    id: '22ce4004c-3c38-4853-968b-e411bafcd999',
+    format: {
+      jwt_vc: {
+        alg: ['ES256K', 'EdDSA']
+      }
+    },
+    input_descriptors: [
+      {
+        id: 'ffdb9b7c-5754-4f46-b63b-590bada959e5',
+        constraints: {
+          fields: [
+            {
+              path: ['$.type[*]'],
+              filter: {
+                type: 'string',
+                const: 'KnownCustomerCredential',
+              },
+            },
+            {
+              path: ['$.issuer'],
+              filter: {
+                type: 'string',
+                const: issuer,
+              },
+            },
+          ],
+        },
+      },
+    ],
+  },
+}
+
+
+// Offerings order
+/*
+1. Ghanaian currency pairs
+2. South African currency pairs
+3. Foreign currency pairs
+4. Multiple African currency pairs
+5. USD to African currency pairs
+*/
+
 const customOfferings = [
-  {data: {...offeringDataTBDollarsToUSDC}},
-  {data: {...offeringDataUSDToGHS}},
   {data: {...offeringDataGHSToUSDC}},
-  {data: {...offeringDataUSDToKES}},
-  {data: {...offeringDataKESToZAR}},
   {data: {...offeringDataZARToBTC}},
-  {data: {...offeringDataUSDToNGN}}
+  {data: {...offeringDataUSDToGBP}},
+  {data: {...offeringDataMADToEGP}},
+  {data: {...offeringDataUSDToGHS}},
+  {data: {...offeringDataGHSToKES}},
+  {data: {...offeringDataEURToZAR}},
+  {data: {...offeringDataGBPToCAD}},
+  {data: {...offeringDataGHSToNGN}},
+  {data: {...offeringDataUSDToKES}},
 ]
 
-function chooseRandomOfferingData(index): OfferingData {
-  if(index == 0) {
-    // return only TBDollars related offerings
-    return {
-      ...customOfferings[0].data,
-      payoutUnitsPerPayinUnit: '0.00035',
-    }
+// function chooseRandomOfferingData(index): OfferingData {
+//   if(index == 0) {
+//     // return only TBDollars related offerings
+//     return {
+//       ...customOfferings[0].data,
+//       payoutUnitsPerPayinUnit: '0.00035',
+//     }
 
-  }
-  if(index == 1) {
-    // return only GHS related offerings
-    const randomSelect = Math.floor(Math.random() * (2 - 1 + 1)) + 1
-    return {
-      ...customOfferings[randomSelect].data
-    }
-  }
-  if(index == 2) {
-    // return only KES and ZAR offerings
-    const randomSelect = Math.floor(Math.random() * (5 - 3 + 1)) + 3
-    return {
-      ...customOfferings[randomSelect].data
-    }
-  }
-  else {
-    // return any other offering except TBDollars
-    const randomSelect = Math.floor(Math.random() * (6 - 1 + 1)) + 1
-    return {
-      ...customOfferings[randomSelect].data
-    }
-  }
+//   }
+//   if(index == 1) {
+//     // return only GHS related offerings
+//     const randomSelect = Math.floor(Math.random() * (2 - 1 + 1)) + 1
+//     return {
+//       ...customOfferings[randomSelect].data
+//     }
+//   }
+//   if(index == 2) {
+//     // return only KES and ZAR offerings
+//     const randomSelect = Math.floor(Math.random() * (5 - 3 + 1)) + 3
+//     return {
+//       ...customOfferings[randomSelect].data
+//     }
+//   }
+//   else {
+//     // return any other offering except TBDollars
+//     const randomSelect = Math.floor(Math.random() * (6 - 1 + 1)) + 1
+//     return {
+//       ...customOfferings[randomSelect].data
+//     }
+//   }
 
-}
+// }
 
 // Function to create a randomized offering
 async function createRandomOffering(index: number): Promise<Offering> {
@@ -590,7 +1235,7 @@ async function createRandomOffering(index: number): Promise<Offering> {
       from: config.pfiDid[customPFIIndex].uri,  // Alternates between two URIs
       protocol: '1.0'
     },
-    data: chooseRandomOfferingData(customPFIIndex),
+    data: customOfferings[index].data //chooseRandomOfferingData(customPFIIndex),
   })
 
   try {
