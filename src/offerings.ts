@@ -10,7 +10,7 @@ const issuer = issuerDid
 
 // generating mock offeringsData
 export const offeringDataTBDollarsToUSDC: OfferingData = {
-  description: `Exchange your TBDollars for USDC Dummy`,
+  description: `Exchange your TBDollars for USDC`,
   payoutUnitsPerPayinUnit: '0.00035',
   payout: {
     currencyCode: 'USDC',
@@ -38,7 +38,7 @@ export const offeringDataTBDollarsToUSDC: OfferingData = {
     ],
   },
   payin: {
-    currencyCode: 'TBD',
+    currencyCode: 'TBDollars',
     methods: [
       {
         kind: 'STORED_BALANCE',
@@ -322,7 +322,7 @@ export const offeringDataKESToZAR: OfferingData = {
 }
 
 export const offeringDataGHSToUSDC: OfferingData = {
-  description: `Exchange your Ghanaian Cedis for USDC on Polygon network`,
+  description: `Exchange your Ghanaian Cedis for USDC`,
   payoutUnitsPerPayinUnit: '0.11',
   payout: {
     currencyCode: 'USDC',
