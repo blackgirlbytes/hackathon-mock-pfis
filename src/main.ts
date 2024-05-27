@@ -101,7 +101,7 @@ function createPFIServer(pfiConfig: PFIServerConfig) {
     // convert to a string, with 2 decimal places
     const payout = (
       parseFloat(rfq.data.payin.amount) * Number(offering.data.payoutUnitsPerPayinUnit)
-    ).toFixed(2)
+    ).toString()
 
     const quote = Quote.create({
       metadata: {
