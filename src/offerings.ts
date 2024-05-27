@@ -120,13 +120,7 @@ export const offeringDataUSDToGHS: OfferingData = {
     methods: [
       {
         kind: 'USD_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -202,13 +196,7 @@ export const offeringDataUSDToKES: OfferingData = {
     methods: [
       {
         kind: 'USD_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -573,13 +561,7 @@ export const offeringDataEURToZAR: OfferingData = {
     methods: [
       {
         kind: 'EUR_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your Euro account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -652,13 +634,7 @@ export const offeringDataGBPToCAD: OfferingData = {
     methods: [
       {
         kind: 'GBP_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -708,7 +684,7 @@ export const offeringDataUSDToGBP: OfferingData = {
           '$schema': 'http://json-schema.org/draft-07/schema#',
           'title': 'GBP Required Payment Details',
           'type': 'object',
-          'required': ['accountNumber', 'sortCode'],
+          'required': ['accountNumber', 'bankName'],
           'additionalProperties': false,
           'properties': {
             'accountNumber': {
@@ -731,13 +707,7 @@ export const offeringDataUSDToGBP: OfferingData = {
     methods: [
       {
         kind: 'USD_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -810,13 +780,7 @@ export const offeringDataAUDToJPY: OfferingData = {
     methods: [
       {
         kind: 'AUD_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -889,13 +853,7 @@ export const offeringDataZARToNGN: OfferingData = {
     methods: [
       {
         kind: 'ZAR_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -968,13 +926,7 @@ export const offeringDataGHSToKES: OfferingData = {
     methods: [
       {
         kind: 'GHS_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -1047,13 +999,7 @@ export const offeringDataMADToEGP: OfferingData = {
     methods: [
       {
         kind: 'MAD_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
@@ -1126,13 +1072,7 @@ export const offeringDataGHSToNGN: OfferingData = {
     methods: [
       {
         kind: 'GHS_BANK_TRANSFER',
-        requiredPaymentDetails: {
-          paymentDetails: {
-            accountNumber: 'Your account number',
-            bic: 'Your bank BIC',
-            accountName: 'Your account name',
-          },
-        },
+        requiredPaymentDetails: {},
       },
     ],
   },
