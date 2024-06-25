@@ -4,17 +4,15 @@ This is an example project that mocks 5 PFI servers using the tbdex protocol.
 
 Currently mocks five PFI servers and can be extended.
 
-This example will:
+This example includes:
 
-* A server which does an "OFAC" check on the customer and issues a verifiable credential only if they are not on the OFAC list.
-* Five tbdex protocol implementation that mocks 5 participating financial institutions.
+* A server which does a sanctions check on the customer and issues a verifiable credential only if they are not on a sanctions list.
+* Five mock PFIs (participating financial institutions) that implement tbDEX.
 
 See [main.ts](src/main.ts) for the liquidity node code (server).
 
 NOTE: this is not using market rates, or anything sensible, and is not intended to showcase all regulatory requirements that must be fulfilled. This is for illustrative purposes only, not production use.
 For a more general exemplar for a PFI liquidity node, please take a look at: https://github.com/TBD54566975/tbdex-pfi-exemplar/ (which also includes a database, this one does not).
-
-This project is a fork of https://github.com/TBD54566975/example-pfi-aud-usd-tbdex
 
 
 # Development Prerequisites
@@ -36,16 +34,17 @@ Once you have installed `nvm`, install the desired node version with `nvm instal
 
 ## Step 0: Setup server
 
-(this is a step you only need to do once).
+(you only need to do this step once).
 
 > 💡 Make sure you have all the [prerequisites](#development-prerequisites)
+
 Install dependencies
 
 ```npm install```
 
-## Step 1: Run liquidity node (server)
+## Step 1: Run liquidity nodes (servers)
 
-Run the server (or restart it) in another terminal window:
+Run the servers (or restart them) in another terminal window:
 
 `npm run server`
 
