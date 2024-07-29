@@ -71,6 +71,16 @@ Configuration can be set using environment variables. Defaults are set in `src/c
 | [LICENSE](./LICENSE)                       | Apache License, Version 2.0                                                    |
 
 
+### Available PFIs
+- AquaFinance Capital: https://aqf-mock-pfis.tbddev.org/
+- SwiftLiquidity Solutions: https://sls-mock-pfis.tbddev.org
+- Flowback Financial: https://ff-mock-pfis.tbddev.org
+- Vertex Liquid Assets: https://vla-mock-pfis.tbddev.org
+- Titanium Trust: https://tt-mock-pfis.tbddev.org
+
+### Required Issuer
+- Ultimate Identity : https://mock-idv.tbddev.org
+
 ### Provided offerings
 - GHS to USDC
 - NGN to KES
@@ -91,4 +101,4 @@ Configuration can be set using environment variables. Defaults are set in `src/c
 - USD to AUD
 - USD to GBP
 - USD to KES
-- USD to MX
+- USD to MXN

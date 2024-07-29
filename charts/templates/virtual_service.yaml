@@ -1,10 +1,61 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: mock-pfis-virtualservice
+  name: mock-pfis-virtualservice1
 spec:
   hosts:
-    - "{{ .Values.virtualService.host }}"
+    - "{{ .Values.virtualService.host1 }}"
+  gateways:
+    - {{ .Values.virtualService.gateway }}
+  http:
+    - name: mock-pfis-route
+      route:
+        - destination:
+            host: mock-pfis
+            port:
+              number: 4000
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock-pfis-virtualservice2
+spec:
+  hosts:
+    - "{{ .Values.virtualService.host2 }}"
+  gateways:
+    - {{ .Values.virtualService.gateway }}
+  http:
+    - name: mock-pfis-route
+      route:
+        - destination:
+            host: mock-pfis
+            port:
+              number: 5000
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock-pfis-virtualservice3
+spec:
+  hosts:
+    - "{{ .Values.virtualService.host3 }}"
+  gateways:
+    - {{ .Values.virtualService.gateway }}
+  http:
+    - name: mock-pfis-route
+      route:
+        - destination:
+            host: mock-pfis
+            port:
+              number: 8000
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock-pfis-virtualservice4
+spec:
+  hosts:
+    - "{{ .Values.virtualService.host4 }}"
   gateways:
     - {{ .Values.virtualService.gateway }}
   http:
@@ -14,21 +65,24 @@ spec:
             host: mock-pfis
             port:
               number: 8080
-
 ---
-apiVersion: security.istio.io/v1beta1
-kind: AuthorizationPolicy
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
 metadata:
-  name: mock-pfis-oauth
+  name: mock-pfis-virtualservice5
 spec:
-  action: CUSTOM
-  provider:
-    name: "oauth2-proxy"
-  rules:
-  - to:
-    - operation:
-        hosts:
-        - "{{ .Values.virtualService.host}}"
+  hosts:
+    - "{{ .Values.virtualService.host5 }}"
+  gateways:
+    - {{ .Values.virtualService.gateway }}
+  http:
+    - name: mock-pfis-route
+      route:
+        - destination:
+            host: mock-pfis
+            port:
+              number: 9000
+
 ---
 # this lets app receive traffic from common ingress gateway
 apiVersion: security.istio.io/v1beta1

@@ -17,10 +17,24 @@ spec:
           image: "{{ .Values.mockPFIs.image.repository }}:{{ .Values.mockPFIs.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports:
-            - containerPort: {{ .Values.service.port }}
+            - containerPort: 4000
+            - containerPort: 5000
+            - containerPort: 8000
+            - containerPort: 8080
+            - containerPort: 9000
           env:
             - name: MOCK_PFIS_URL
               value: "https://mock-pfis.tbddev.org"
+            - name: CONFIG_PORT_0
+              value: "4000"
+            - name: CONFIG_PORT_1
+              value: "5000"
+            - name: CONFIG_PORT_2
+              value: "8000"
+            - name: CONFIG_PORT_3
+              value: "8080"
+            - name: CONFIG_PORT_4
+              value: "9000"
 ---
 apiVersion: v1
 kind: Service
@@ -29,7 +43,20 @@ metadata:
 spec:
   type: {{ .Values.service.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - name: pfi1
+      port: 4000
+      targetPort: 4000
+    - name: pfi2
+      port: 5000
+      targetPort: 5000
+    - name: pfi3
+      port: 8000
+      targetPort: 8000
+    - name: pfi4
+      port: 8080
       targetPort: 8080
+    - name: pfi5
+      port: 9000
+      targetPort: 9000
   selector:
     app: mock-pfis

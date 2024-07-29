@@ -8,7 +8,11 @@ mockPFIs:
     pullPolicy: Always
 
 virtualService:
-  host: mock-pfis.tbddev.org
+  host1: aqf-mock-pfis.tbddev.org
+  host2: sls-mock-pfis.tbddev.org
+  host3: ff-mock-pfis.tbddev.org
+  host4: vla-mock-pfis.tbddev.org
+  host5: tt-mock-pfis.tbddev.org
   gateway: istio-system/primary-gateway
 
 service:
