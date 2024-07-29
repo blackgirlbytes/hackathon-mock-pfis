@@ -44,4 +44,4 @@ spec:
         - "{{ .Values.virtualService.host }}"
   - from:
     - source:
-        namespaces: [istio-system"]
+        namespaces: ["istio-system"]
