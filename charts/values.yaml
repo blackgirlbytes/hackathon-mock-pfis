@@ -1,0 +1,21 @@
+replicaCount: 1
+argocdAppRevision: argoPluginDidNotSupplyAValueForargocdAppRevision
+
+mockPFIs:
+  image:
+    repository: 844731274526.dkr.ecr.us-west-2.amazonaws.com/tbdeng/mock-pfis
+    tag: "latest"
+    pullPolicy: Always
+
+virtualService:
+  host: mock-pfis.tbddev.org
+  gateway: istio-system/primary-gateway
+
+service:
+  type: ClusterIP
+  port: 8080
+
+imagePullPolicy: Always
+
+nameOverride: ""
+fullnameOverride: ""

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mock-pfis
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: mock-pfis
+  template:
+    metadata:
+      labels:
+        app: mock-pfis
+    spec:
+      containers:
+        - name: mock-pfis
+          image: "{{ .Values.mockPFIs.image.repository }}:{{ .Values.mockPFIs.image.tag }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            - name: MOCK_PFIS_URL
+              value: "https://mock-pfis.tbddev.org"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mock-pfis
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+  selector:
+    app: mock-pfis
