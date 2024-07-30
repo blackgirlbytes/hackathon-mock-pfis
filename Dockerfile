@@ -10,7 +10,7 @@ RUN npm install
 
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run server
+RUN npm run compile
 
 EXPOSE 4000
 EXPOSE 5000
@@ -18,4 +18,4 @@ EXPOSE 8000
 EXPOSE 8080
 EXPOSE 9000
 
-ENTRYPOINT ["node", "dist/main.js"]
+CMD [ "npm", "run", "server" ]
