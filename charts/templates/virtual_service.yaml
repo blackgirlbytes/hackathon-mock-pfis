@@ -113,7 +113,12 @@ spec:
   - to:
     - operation:
         hosts:
-        - "{{ .Values.virtualService.host }}"
+        - "{{ .Values.virtualService.host1 }}"
+        - "{{ .Values.virtualService.host2 }}"
+        - "{{ .Values.virtualService.host3 }}"
+        - "{{ .Values.virtualService.host4 }}"
+        - "{{ .Values.virtualService.host5 }}"
+        - "{{ .Values.virtualService.issuerhost}}"
   - from:
     - source:
         namespaces: ["istio-system"]
