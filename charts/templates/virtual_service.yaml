@@ -84,6 +84,24 @@ spec:
               number: 9000
 
 ---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock-pfis-virtualserviceIssuer
+spec:
+  hosts:
+    - "{{ .Values.virtualService.issuerhost }}"
+  gateways:
+    - {{ .Values.virtualService.gateway }}
+  http:
+    - name: mock-pfis-route
+      route:
+        - destination:
+            host: mock-pfis
+            port:
+              number: 3001
+
+---
 # this lets app receive traffic from common ingress gateway
 apiVersion: security.istio.io/v1beta1
 kind: AuthorizationPolicy

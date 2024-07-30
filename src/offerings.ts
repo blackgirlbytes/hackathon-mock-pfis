@@ -1,14 +1,11 @@
-import { OfferingsApi, Offering, OfferingData } from '@tbdex/http-server'
+import { OfferingsApi, Offering } from '@tbdex/http-server'
 import { config } from './config.js'
 // import fs from 'fs/promises'
 import { PresentationExchange } from '@web5/credentials'
-import { issuerDid } from './credential-issuer.js'
 import { BearerDid } from '@web5/dids'
 
 import * as offerings from './offeringData.js'
 
-// load issuer's did from a file called issuer-did.txt
-const issuer = issuerDid
 
 
 // Offerings order

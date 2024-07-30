@@ -1,0 +1,53 @@
+{
+  "uri": "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
+  "document": {
+    "id": "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
+    "verificationMethod": [
+      {
+        "id": "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#0",
+        "type": "JsonWebKey",
+        "controller": "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o",
+        "publicKeyJwk": {
+          "crv": "Ed25519",
+          "kty": "OKP",
+          "x": "hcW2bkScO39mcud0eZukptsluyfeQRIPZsRn_B1rOWU",
+          "kid": "F3HnnJri3cCgQ8Uk8I7E3oxVqQD2F5VS5ys7yCAqNSI",
+          "alg": "EdDSA"
+        }
+      }
+    ],
+    "authentication": [
+      "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#0"
+    ],
+    "assertionMethod": [
+      "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#0"
+    ],
+    "capabilityDelegation": [
+      "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#0"
+    ],
+    "capabilityInvocation": [
+      "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#0"
+    ],
+    "service": [
+      {
+        "id": "did:dht:ozn5c51ruo7z63u1h748ug7rw5p1mq3853ytrd5gatu9a8mm8f1o#pfi",
+        "type": "PFI",
+        "serviceEndpoint": "https://tt-mock-pfis.tbddev.org"
+      }
+    ]
+  },
+  "metadata": {
+    "published": true,
+    "versionId": "1722350694"
+  },
+  "privateKeys": [
+    {
+      "crv": "Ed25519",
+      "d": "8s7cZwfVVFJg7-urrK4p2fDafroHAp-vthu_RmR4hTc",
+      "kty": "OKP",
+      "x": "hcW2bkScO39mcud0eZukptsluyfeQRIPZsRn_B1rOWU",
+      "kid": "F3HnnJri3cCgQ8Uk8I7E3oxVqQD2F5VS5ys7yCAqNSI",
+      "alg": "EdDSA"
+    }
+  ]
+}

@@ -13,6 +13,7 @@ virtualService:
   host3: ff-mock-pfis.tbddev.org
   host4: vla-mock-pfis.tbddev.org
   host5: tt-mock-pfis.tbddev.org
+  issuerhost: mock-idv.tbddev.org
   gateway: istio-system/primary-gateway
 
 service:

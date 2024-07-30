@@ -1,52 +1,52 @@
 {
-  "uri": "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo",
+  "uri": "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y",
   "document": {
-    "id": "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo",
+    "id": "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y",
     "verificationMethod": [
       {
-        "id": "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#0",
+        "id": "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#0",
         "type": "JsonWebKey",
-        "controller": "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo",
+        "controller": "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y",
         "publicKeyJwk": {
           "crv": "Ed25519",
           "kty": "OKP",
-          "x": "cil2PyVJ5zd0G9yGhwyjlQKPAXVhDvFPGX3UOmheTkM",
-          "kid": "j7X6AqZf5ih9DhqoJSs86433JxPsLaF8svG5bGtPkaQ",
+          "x": "yVV92sV4SVoq2ag2KgLZdtQH-0iMW_oUUgFQoqqmmmQ",
+          "kid": "JGCLQ9Ot_y1zq-9wTJpUleG9SZgVjMAXLvUT70M5F9A",
           "alg": "EdDSA"
         }
       }
     ],
     "authentication": [
-      "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#0"
+      "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#0"
     ],
     "assertionMethod": [
-      "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#0"
+      "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#0"
     ],
     "capabilityDelegation": [
-      "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#0"
+      "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#0"
     ],
     "capabilityInvocation": [
-      "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#0"
+      "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#0"
     ],
     "service": [
       {
-        "id": "did:dht:qewzcx3fj8uuq7y551deqdfd1wbe6ymicr8xnua3xzkdw4n6j3bo#pfi",
+        "id": "did:dht:3fkz5ssfxbriwks3iy5nwys3q5kyx64ettp9wfn1yfekfkiguj1y#pfi",
         "type": "PFI",
-        "serviceEndpoint": "http://localhost:4000"
+        "serviceEndpoint": "https://aqf-mock-pfis.tbddev.org"
       }
     ]
   },
   "metadata": {
     "published": true,
-    "versionId": "1714403047"
+    "versionId": "1722350693"
   },
   "privateKeys": [
     {
       "crv": "Ed25519",
-      "d": "J2gJTmpzV5k0WeMKpt0WvJUBrtQ9MmNH8sKLBvDRfYI",
+      "d": "lvq4XwJFzotR8MJ9CwhrD7aAFZ8NmOoBQt8cgPop4nY",
       "kty": "OKP",
-      "x": "cil2PyVJ5zd0G9yGhwyjlQKPAXVhDvFPGX3UOmheTkM",
-      "kid": "j7X6AqZf5ih9DhqoJSs86433JxPsLaF8svG5bGtPkaQ",
+      "x": "yVV92sV4SVoq2ag2KgLZdtQH-0iMW_oUUgFQoqqmmmQ",
+      "kid": "JGCLQ9Ot_y1zq-9wTJpUleG9SZgVjMAXLvUT70M5F9A",
       "alg": "EdDSA"
     }
   ]

@@ -10,8 +10,7 @@ import { config } from './config.js'
 
 
 
-const issuer: BearerDid = config.pfiDid[4] // issuer is the 5th PFI - pfi_issuer.json
-// write issuer did to file so server can trust it:
+const issuer: BearerDid = config.issuerDid
 
 
 export const issuerDid = issuer.uri

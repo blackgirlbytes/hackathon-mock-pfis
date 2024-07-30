@@ -13,6 +13,7 @@ import { TbdexHttpServer } from '@tbdex/http-server'
 import { requestCredential } from './credential-issuer.js'
 import { NextFunction } from 'express-serve-static-core'
 import { InMemoryExchangesApi } from './exchanges.js'
+import express from 'express'
 
 console.log('"AquaFinance Capital" launched: ', config.pfiDid[0].uri)
 console.log('"SwiftLiquidity Solutions" launched: ', config.pfiDid[1].uri)
@@ -219,14 +220,29 @@ const myPFIServer3 = createPFIServer({bearerDid: config.pfiDid[2], port: config.
 const myPFIServer4 = createPFIServer({bearerDid: config.pfiDid[3], port: config.port[3]})
 const myPFIServer5 = createPFIServer({bearerDid: config.pfiDid[4], port: config.port[4]})
 
-// Make one of the PFIs a credential issuer - localhost:9000
-myPFIServer5.httpApi.api.get('/vc', async (req, res) => {
+// setup issuer server
+const issuerApi = express()
+const issuerPort = 3001
+
+issuerApi.use(snooper())
+
+issuerApi.get('/', (req, res) => {
+  res.send(
+    'Please make a get request to /kcc?name=yourname&country=yourcountry&did=yourdid to get a credential',
+  )
+})
+
+issuerApi.get('/kcc', async (req, res) => {
   const credentials = await requestCredential(
     req.query.name as string,
     req.query.country as string,
     req.query.did as string,
   )
   res.send(credentials)
+})
+
+const issuerServer = issuerApi.listen(issuerPort, () => {
+  log.info(`Credential issuer listening on port ${issuerPort}`)
 })
 
 
@@ -260,7 +276,8 @@ async function gracefulShutdown() {
       stopServer(httpServerShutdownHandler2),
       stopServer(httpServerShutdownHandler3),
       stopServer(httpServerShutdownHandler4),
-      stopServer(httpServerShutdownHandler5)
+      stopServer(httpServerShutdownHandler5),
+      issuerServer.close(),
     ])
     log.info('All servers stopped, exiting now.')
     process.exit(0)
