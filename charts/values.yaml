@@ -4,7 +4,7 @@ argocdAppRevision: argoPluginDidNotSupplyAValueForargocdAppRevision
 mockPFIs:
   image:
     repository: ghcr.io/tbd54566975/tbd-developer-mock-pfis
-    tag: "latest"
+    tag: main
     pullPolicy: Always
 
 virtualService:
