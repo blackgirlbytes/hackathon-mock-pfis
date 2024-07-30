@@ -3,7 +3,7 @@ argocdAppRevision: argoPluginDidNotSupplyAValueForargocdAppRevision
 
 mockPFIs:
   image:
-    repository: 844731274526.dkr.ecr.us-west-2.amazonaws.com/tbdeng/mock-pfis
+    repository: ghcr.io/tbd54566975/tbd-developer-mock-pfis
     tag: "latest"
     pullPolicy: Always
 
