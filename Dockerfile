@@ -2,8 +2,6 @@ FROM node:20.5-buster
 
 ARG COMMIT_HASH
 ENV COMMIT_HASH=${COMMIT_HASH}
-ARG PORT
-ENV PORT=${PORT:-8080}
 
 WORKDIR /mock-pfis
 
@@ -12,7 +10,12 @@ RUN npm install
 
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run compile
+RUN npm run server
 
-EXPOSE ${PORT}
+EXPOSE 4000
+EXPOSE 5000
+EXPOSE 8000
+EXPOSE 8080
+EXPOSE 9000
+
 ENTRYPOINT ["node", "dist/main.js"]
