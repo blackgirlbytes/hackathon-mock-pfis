@@ -25,7 +25,7 @@ jobs:
       matrix:
         include:
           - dockerfile: ./Dockerfile
-            image: ghcr.io/tbd54566975/tbd-developer-mock-pfis
+            image: ghcr.io/tbd54566975/tbd-hackathon-mock-pfis
 
     steps:
       - name: Checkout repository
